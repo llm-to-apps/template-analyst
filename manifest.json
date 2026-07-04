@@ -25,13 +25,12 @@
     ]
   },
   "source": {
-    "repository": "analyst-template",
-    "remote": "git@github.com:llm-to-apps/analyst-template.git",
-    "path": "templates/analyst"
+    "repository": "template-analyst",
+    "remote": "git@github.com:llm-to-apps/template-analyst.git"
   },
   "updates": {
     "github": {
-      "repository": "llm-to-apps/analyst-template",
+      "repository": "llm-to-apps/template-analyst",
       "ref": "main",
       "path": "manifest.json"
     }
@@ -44,7 +43,7 @@
       "preserve": ["node_modules", "uploads", "extensions"]
     }
   },
-  "image": "ghcr.io/llm-to-apps/analyst-template:latest",
+  "image": "ghcr.io/llm-to-apps/template-analyst:latest",
   "runtime": {
     "workdir": "/workspace",
     "appPort": 80,

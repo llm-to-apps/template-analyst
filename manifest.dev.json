@@ -25,13 +25,12 @@
     ]
   },
   "source": {
-    "repository": "analyst-template-dev",
-    "remote": "git@github.com:llm-to-apps/analyst-template.git",
-    "path": "templates/analyst"
+    "repository": "template-analyst-dev",
+    "remote": "git@github.com:llm-to-apps/template-analyst.git"
   },
   "updates": {
     "github": {
-      "repository": "llm-to-apps/analyst-template",
+      "repository": "llm-to-apps/template-analyst",
       "ref": "main",
       "path": "manifest.dev.json"
     }
