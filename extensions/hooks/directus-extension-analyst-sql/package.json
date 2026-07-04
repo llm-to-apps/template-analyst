@@ -1,0 +1,15 @@
+{
+  "name": "directus-extension-analyst-sql",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "OS7 Analyst SQL tools for the Directus MCP endpoint.",
+  "license": "UNLICENSED",
+  "peerDependencies": {
+    "directus-extension-mcp-customization": "^1.0.0"
+  },
+  "directus:extension": {
+    "type": "hook",
+    "path": "dist/index.js",
+    "host": "^11.12.0 || ^12.0.0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@os7/analyst-template",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bootstrap": "directus bootstrap && node scripts/enable-mcp.mjs",
+    "dev": "npm run bootstrap && HOST=0.0.0.0 PORT=8055 directus start",
+    "dev:docker": "npm run bootstrap && HOST=0.0.0.0 PORT=${APP_DEV_PORT:-4047} directus start",
+    "start": "directus start",
+    "build": "node scripts/validate-extension.mjs",
+    "lint": "node scripts/validate-extension.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test tests/*.test.mjs",
+    "typecheck": "node scripts/validate-extension.mjs",
+    "audit:check": "npm audit --audit-level=high"
+  },
+  "dependencies": {
+    "directus": "^12.1.1",
+    "directus-extension-mcp-customization": "^1.0.2",
+    "mysql2": "^3.15.3"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.4"
+  }
+}

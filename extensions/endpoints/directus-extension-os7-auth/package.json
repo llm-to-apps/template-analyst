@@ -1,0 +1,12 @@
+{
+  "name": "directus-extension-os7-auth",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "OS7 OAuth login bridge for Analyst Directus projects.",
+  "license": "UNLICENSED",
+  "directus:extension": {
+    "type": "endpoint",
+    "path": "dist/index.js",
+    "host": "^11.12.0 || ^12.0.0"
+  }
+}

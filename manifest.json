@@ -1,0 +1,133 @@
+{
+  "$schema": "../manifest.schema.json",
+  "schemaVersion": 1,
+  "id": "analyst",
+  "slug": "analyst",
+  "name": "Analyst",
+  "description": "Directus-backed analytical workspace with schema management and guarded SQL over a clean database.",
+  "icon": "chart",
+  "status": "available",
+  "sortOrder": 20,
+  "agent": {
+    "routing": [
+      "data analysis",
+      "spreadsheet import",
+      "database-backed analysis",
+      "Directus schema modeling",
+      "SQL analytics"
+    ],
+    "tasks": [
+      "create collections and fields from structured data",
+      "load rows into Directus collections",
+      "inspect database tables",
+      "run guarded read-only SQL queries",
+      "prepare data for canvas visualizations"
+    ]
+  },
+  "source": {
+    "repository": "analyst-template",
+    "remote": "git@github.com:llm-to-apps/analyst-template.git",
+    "path": "templates/analyst"
+  },
+  "updates": {
+    "github": {
+      "repository": "llm-to-apps/analyst-template",
+      "ref": "main",
+      "path": "manifest.json"
+    }
+  },
+  "git": {
+    "mount": {
+      "target": "/workspace",
+      "strategy": "clone",
+      "defaultBranch": "main",
+      "preserve": ["node_modules", "uploads", "extensions"]
+    }
+  },
+  "image": "ghcr.io/llm-to-apps/analyst-template:latest",
+  "runtime": {
+    "workdir": "/workspace",
+    "appPort": 80,
+    "devPort": 4047,
+    "agentPort": 7070,
+    "development": {
+      "enabled": false
+    },
+    "restoreCommand": "npm ci",
+    "startupCommands": "npm run bootstrap"
+  },
+  "resources": {
+    "memory": {
+      "reservationMb": 256,
+      "limitMb": 2048
+    },
+    "cpu": {
+      "reservation": 0.05,
+      "limit": 1
+    }
+  },
+  "services": {
+    "mysql": {
+      "required": true,
+      "database": "project"
+    },
+    "mcp": {
+      "auth": "projectServiceTokenProxy",
+      "endpointPath": "/api/mcp",
+      "upstreamPath": "/mcp"
+    },
+    "oauth": {
+      "required": true,
+      "loginPath": "/os7/login",
+      "redirectPath": "/os7/callback"
+    },
+    "storage": {
+      "required": true
+    }
+  },
+  "env": {
+    "template": {
+      "NODE_ENV": "production",
+      "PROJECT_ID": "{{app.projectId}}",
+      "PUBLIC_URL": "{{app.publicUrl}}",
+      "HOST": "0.0.0.0",
+      "PORT": "80",
+      "SESSION_COOKIE_SAME_SITE": "none",
+      "SESSION_COOKIE_SECURE": "true",
+      "CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_ANCESTORS": "'self' http://localhost http://localhost:3000 http://127.0.0.1:3000 http://localhost:3007 http://127.0.0.1:3007 http://os7.localhost https://os7.dev https://*.os7.dev",
+      "DB_CLIENT": "mysql",
+      "DB_HOST": "mysql",
+      "DB_PORT": "3306",
+      "DB_DATABASE": "{{services.mysql.database}}",
+      "DB_USER": "{{services.mysql.user}}",
+      "DB_PASSWORD": "{{services.mysql.password}}",
+      "MYSQL_HOST": "mysql",
+      "MYSQL_PORT": "3306",
+      "MYSQL_DATABASE": "{{services.mysql.database}}",
+      "MYSQL_USER": "{{services.mysql.user}}",
+      "MYSQL_PASSWORD": "{{services.mysql.password}}",
+      "SECRET": "{{services.oauth.clientSecret}}",
+      "ADMIN_EMAIL": "admin+{{app.projectId}}@example.com",
+      "ADMIN_PASSWORD": "{{services.oauth.clientSecret}}",
+      "OS7_OAUTH_CLIENT_ID": "{{services.oauth.clientId}}",
+      "OS7_OAUTH_CLIENT_SECRET": "{{services.oauth.clientSecret}}",
+      "OS7_OAUTH_AUTHORIZE_URL": "{{services.oauth.authorizeUrl}}",
+      "OS7_OAUTH_TOKEN_URL": "{{services.oauth.internalTokenUrl}}",
+      "OS7_OAUTH_USERINFO_URL": "{{services.oauth.internalUserinfoUrl}}",
+      "OS7_OAUTH_DEFAULT_ROLE_ID": "4b1f479e-95ad-4f35-92b6-67775aba13dd",
+      "OS7_OAUTH_SCOPE": "email profile",
+      "ANALYST_MCP_STATIC_TOKEN": "{{services.oauth.projectServiceApiToken}}",
+      "MCP_OAUTH_ENABLED": "false",
+      "MCP_OAUTH_DCR_ENABLED": "false",
+      "MCP_OAUTH_CIMD_ENABLED": "false",
+      "STORAGE_LOCATIONS": "s3",
+      "STORAGE_S3_DRIVER": "s3",
+      "STORAGE_S3_KEY": "{{services.storage.accessKeyId}}",
+      "STORAGE_S3_SECRET": "{{services.storage.secretAccessKey}}",
+      "STORAGE_S3_BUCKET": "{{services.storage.bucket}}",
+      "STORAGE_S3_REGION": "{{services.storage.region}}",
+      "STORAGE_S3_ENDPOINT": "{{services.storage.internalEndpoint}}",
+      "STORAGE_S3_FORCE_PATH_STYLE": "{{services.storage.forcePathStyle}}"
+    }
+  }
+}
